@@ -1,0 +1,17 @@
+---
+import '../styles/portfolio.css';
+const { title='Marco Braga — Interior design, photography & visual arts', description='Marco Braga, Junior Interior Designer based in Milano. Selected spatial projects, photography and digital visual art.' }=Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#000000" />
+<title>{title}</title><meta name="description" content={description} />
+<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+<meta property="og:title" content={title} /><meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+</head>
+<body><slot /></body>
+</html>

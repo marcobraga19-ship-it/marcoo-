@@ -1,0 +1,20 @@
+[
+  {
+    "webfont": "haas-display-roman.woff2",
+    "family": "HaasGrot Disp 55 Rm Trial",
+    "weight": 400,
+    "status": "Trial, supplied by Marco"
+  },
+  {
+    "webfont": "haas-display-thin.woff2",
+    "family": "HaasGrot Disp 35 Th Trial",
+    "weight": 285,
+    "status": "Trial, supplied by Marco"
+  },
+  {
+    "webfont": "haas-text-roman.woff2",
+    "family": "HaasGrot Text 55 Rm Trial",
+    "weight": 400,
+    "status": "Trial, supplied by Marco"
+  }
+]

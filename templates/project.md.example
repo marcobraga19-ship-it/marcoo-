@@ -1,0 +1,20 @@
+---
+{
+  "slug": "nuovo-progetto",
+  "title": "Titolo del progetto",
+  "subtitle": "Sottotitolo",
+  "type": "interior",
+  "number": "10",
+  "year": "2026",
+  "location": "Milano, Italy",
+  "order": 10,
+  "archive": false,
+  "cover": "./cover.webp",
+  "summary": "Descrizione breve del progetto.",
+  "blocks": [
+    { "type": "text", "text": "Testo completo del progetto." },
+    { "type": "drawing", "src": "./pianta.svg", "alt": "Pianta del progetto", "caption": "Plan" },
+    { "type": "image", "src": "./cover.webp", "alt": "Vista degli interni", "caption": "Interior view" }
+  ]
+}
+---

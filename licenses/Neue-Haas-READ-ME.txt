@@ -1,0 +1,1 @@
+Only Regular (Roman 400) and Thin (285) are used. Files supplied by Marco, marked Trial. Converted WOFF2 retain original outlines and metadata. Production webfont files and a suitable license are needed before public deployment.

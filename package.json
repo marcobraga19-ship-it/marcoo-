@@ -1,0 +1,21 @@
+{
+  "name": "marco-braga-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "export:jsx": "node scripts/export-jsx.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@splinetool/runtime": "2.0.55",
+    "astro": "^5.13.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Portfolio from '../../components/Portfolio.jsx';
+import { loadProjects } from '../../lib/projects';
+export async function getStaticPaths() {
+ const projects=await loadProjects();
+ return projects.map(project=>({params:{slug:project.slug},props:{project,projects}}));
+}
+const { project,projects }=Astro.props;
+---
+<Layout title={`${project.title} — Marco Braga`} description={project.summary || project.subtitle}>
+<Portfolio projects={projects} initialSlug={project.slug} client:load />
+</Layout>
