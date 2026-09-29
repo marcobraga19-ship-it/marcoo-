@@ -4,6 +4,11 @@ import OpeningSequence from './OpeningSequence.jsx';
 const labels={architecture:'Architecture',interior:'Interior design',photography:'Photography',visual:'Visual arts',sound:'Sound'};
 const base=import.meta.env.BASE_URL || '/';
 function Letters({text,as:Tag='span',className=''}) { return <Tag className={className}>{text}</Tag>; }
+// SVG paths keep arrows monochrome on every platform, including mobile.
+function Arrow({direction='right'}) {
+ const paths={right:'M4 12h16m-7-7 7 7-7 7',left:'M20 12H4m7-7-7 7 7 7',diagonal:'M5 19 19 5M5 5h14v14'};
+ return <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" focusable="false" style={{display:'inline-block',verticalAlign:'middle',flexShrink:0}}><path d={paths[direction]}/></svg>;
+}
 // Shared gesture controller. No frames are requested when the surface is idle.
 function useHorizontal(ref,enabled=true) {
  const api=useRef({go:()=>{},step:()=>{}});
@@ -85,9 +90,9 @@ function ProjectDialog({project,onClose,dialogRef}){
   <header className="detail-header"><button onClick={onClose} autoFocus aria-label="Close project and return to portfolio">Close <span aria-hidden="true">×</span></button><span className="eyebrow">{labels[project.type]}</span><span className="eyebrow detail-header-title">{project.title}</span></header>
   <div ref={track} className="horizontal detail-track" tabIndex={0} aria-label={project.title+', horizontal project sequence'}>
    <section className={'detail-intro block '+project.type}><span className="eyebrow">{project.number&&project.number+' / '}{labels[project.type]}</span><h1 id="detail-title">{project.title}</h1><p className="detail-subtitle">{project.subtitle}</p><p className="detail-meta">{[project.year,project.location].filter(Boolean).join(' — ')}</p><p className="detail-summary">{project.summary}</p></section>
-   <MediaBlocks project={project}/><section className="block project-end"><button onClick={onClose}>Back to works ↗</button></section>
+   <MediaBlocks project={project}/><section className="block project-end"><button onClick={onClose}>Back to works <Arrow direction="diagonal"/></button></section>
   </div>
-  <footer className="footer"><span className="eyebrow">Scroll to explore</span><div><button onClick={()=>controls.current.step(-1)} aria-label="Previous project column">←</button><button onClick={()=>controls.current.step(1)} aria-label="Next project column">→</button></div></footer>
+  <footer className="footer"><span className="eyebrow">Scroll to explore</span><div><button onClick={()=>controls.current.step(-1)} aria-label="Previous project column"><Arrow direction="left"/></button><button onClick={()=>controls.current.step(1)} aria-label="Next project column"><Arrow/></button></div></footer>
  </dialog>;
 }
 export default function Portfolio({projects,initialSlug='',standalone=false}) {
@@ -123,7 +128,7 @@ export default function Portfolio({projects,initialSlug='',standalone=false}) {
    <span className="project-number">{p.number?<Letters text={p.number}/>:<span className="eyebrow">{labels[p.type]}</span>}</span>
    <div className="project-heading"><Letters text={p.title} as="h3"/><p>{p.subtitle}</p></div>
    <div className="project-thumb"><Picture asset={p.cover} alt={p.title} sizes="(max-width:819px) 240px, 336px"/></div>
-   <p className="project-summary">{p.summary}</p><div className="project-meta"><span>{p.year}</span><span>{p.location}</span><span aria-hidden="true">↗</span></div>
+   <p className="project-summary">{p.summary}</p><div className="project-meta"><span>{p.year}</span><span>{p.location}</span><span aria-hidden="true"><Arrow direction="diagonal"/></span></div>
   </a>;
  return <div className={'portfolio motion-surface '+(active?'has-project':'')}>
   <div className="grid" aria-hidden="true"/>
@@ -131,7 +136,7 @@ export default function Portfolio({projects,initialSlug='',standalone=false}) {
   <header className="header"><button className="home-link" onClick={()=>go('intro')}>Marco Braga</button><nav aria-label="Portfolio"><button aria-current={section==='works'?'page':undefined} onClick={()=>go('works')}>Works</button><button aria-current={section==='archive'?'page':undefined} onClick={()=>go('archive')}>Archive</button><button aria-current={section==='profile'||section==='record'?'page':undefined} onClick={()=>go('profile')}>Profile</button><button aria-current={section==='contact'?'page':undefined} onClick={()=>go('contact')}>Contact</button></nav><span className="eyebrow header-location">Milano, IT</span></header>
   <main ref={track} className="horizontal home-track" tabIndex={0} aria-label="Portfolio, scroll horizontally to explore">
    <OpeningSequence/>
-   <section className="intro" data-section="intro" aria-labelledby="intro-name"><div className="intro-name" id="intro-name"><Letters as="h1" text="Marco Braga"/></div><p className="intro-disciplines">Interior design — Photography — Visual arts</p><button className="intro-enter" onClick={()=>go('works')}>Explore works <span aria-hidden="true">→</span></button></section>
+   <section className="intro" data-section="intro" aria-labelledby="intro-name"><div className="intro-name" id="intro-name"><Letters as="h1" text="Marco Braga"/></div><p className="intro-disciplines">Interior design — Photography — Visual arts</p><button className="intro-enter" onClick={()=>go('works')}>Explore works <span aria-hidden="true"><Arrow/></span></button></section>
    <section className="word-panel" data-section="works" aria-label="Works"><span className="eyebrow">Selected projects</span><Letters as="h2" text="Works"/><span className="eyebrow word-bottom">Space / form / experience</span></section>
    {projects.filter(p=>!p.archive).map(card)}
    <section className="word-panel" data-section="archive" aria-label="Archive"><span className="eyebrow">Personal works</span><Letters as="h2" text="Archive"/><span className="eyebrow word-bottom">Photography / visual arts / sound</span></section>
@@ -142,9 +147,9 @@ export default function Portfolio({projects,initialSlug='',standalone=false}) {
    <section className="word-panel" data-section="record" aria-label="Record"><span className="eyebrow">Education & experience</span><Letters as="h2" text="Record"/></section>
    <section className="record-panel copy-panel"><h2 className="eyebrow">Education</h2><div className="record"><span>2026</span><p>Exchange Program<br/>Environmental Design<br/>Kyushu University, Fukuoka</p><p className="award">+ Ando Prize</p></div><div className="record"><span>2023 — now</span><p>Interior Design / Bachelor’s Degree<br/>Politecnico di Milano</p><p className="award">+ Best First-Year Student Award, 2023</p></div><div className="record"><span>2018 — 2023</span><p>Scientific High School<br/>Francesco Gonzaga Institute<br/>Castiglione delle Stiviere</p></div></section>
    <section className="record-panel copy-panel"><h2 className="eyebrow">Experience</h2><div className="record"><span>2026</span><p>Research student<br/>Professor Masaaki Iwamoto’s studio<br/>Fukuoka, Japan</p></div><div className="record"><span>2024</span><p>Personal exhibition / Visual arts<br/>Carpenedolo, Italy</p></div><div className="record"><span>2022</span><p>Internship / Fenaroli Photographic Studio<br/>Montichiari, Italy</p></div></section>
-   <section className="contact-panel" data-section="contact"><span className="eyebrow">Get in touch / Milano, Italy</span><Letters as="h2" text="Contact"/><div className="contact-links"><a href="mailto:marcolino.braga19@gmail.com"><span>marcolino.braga19</span><wbr/>@gmail.com</a><a href="https://www.instagram.com/marcoobraga/" target="_blank" rel="noreferrer">@marcoobraga</a><a href="tel:+393494241959">+39 349 424 1959</a></div></section>
+   <section className="contact-panel" data-section="contact"><span className="eyebrow">Get in touch / Milano, Italy</span><Letters as="h2" text="Contact"/><div className="contact-links"><a href="https://www.instagram.com/marcoobraga/" target="_blank" rel="noreferrer">@marcoobraga</a><a href="tel:+393494241959">+39 349 424 1959</a></div></section>
   </main>
-  <footer className="footer"><span className="eyebrow scroll-hint"><span className="desktop-hint">Scroll / drag to explore</span><span className="mobile-hint">Swipe to explore</span></span><div><button onClick={()=>controls.current.step(-1)} aria-label="Previous column">←</button><button onClick={()=>controls.current.step(1)} aria-label="Next column">→</button></div></footer>
+  <footer className="footer"><span className="eyebrow scroll-hint"><span className="desktop-hint">Scroll / drag to explore</span><span className="mobile-hint">Swipe to explore</span></span><div><button onClick={()=>controls.current.step(-1)} aria-label="Previous column"><Arrow direction="left"/></button><button onClick={()=>controls.current.step(1)} aria-label="Next column"><Arrow/></button></div></footer>
   <ProjectDialog project={active} onClose={close} dialogRef={dialog}/>
  </div>;
 }
