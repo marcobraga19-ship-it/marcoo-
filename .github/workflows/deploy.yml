@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SITE_URL: https://marcobraga.net
+      SITE_URL: https://marcobraga.site
       BASE_PATH: /
       ASTRO_TELEMETRY_DISABLED: 1
     steps:
