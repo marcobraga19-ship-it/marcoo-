@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://www.marcobraga.net',
+  site: process.env.SITE_URL || 'https://marcobraga.site',
   base: process.env.BASE_PATH || '/',
   output: 'static',
   integrations: [react()],
